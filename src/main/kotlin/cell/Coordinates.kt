@@ -7,12 +7,34 @@ class Coordinates(
 
     private fun toCells(mineCoordinates: List<Coordinate>): Map<Coordinate, Cell> {
         val mineCells = mineCoordinates.map { it to MineCell }
-        val blankCells =
-            values
-                .filterNot(mineCoordinates::contains)
-                .map { it to BlankCell }
+        val blankCells = createBlankCells(mineCoordinates)
 
         return (mineCells + blankCells).toMap()
+    }
+
+    private fun createBlankCells(mineCoordinates: List<Coordinate>): List<Pair<Coordinate, BlankCell>> {
+        val blankCoordinates = filterBlankCoordinates(mineCoordinates)
+
+        return blankCoordinates.map { coordinate ->
+            val adjacentMines = countAdjacentMines(mineCoordinates, coordinate)
+            coordinate to BlankCell(adjacentMines)
+        }
+    }
+
+    private fun filterBlankCoordinates(mineCoordinates: List<Coordinate>): List<Coordinate> {
+        return values.filterNot(mineCoordinates::contains)
+    }
+
+    private fun countAdjacentMines(mineCoordinates: List<Coordinate>, coordinate: Coordinate): Int {
+        val directions = CoordinateDirection.entries.toTypedArray()
+
+        return directions.count { direction ->
+            val adjacentCoordinate = Coordinate(
+                coordinate.x + direction.x,
+                coordinate.y + direction.y,
+            )
+            adjacentCoordinate in mineCoordinates
+        }
     }
 
     companion object {
