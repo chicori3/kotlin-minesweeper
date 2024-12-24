@@ -17,7 +17,7 @@ class Coordinates(
 
         return blankCoordinates.map { coordinate ->
             val adjacentMines = countAdjacentMines(mineCoordinates, coordinate)
-            coordinate to BlankCell(adjacentMines)
+            coordinate to BlankCell(MineCount.of(adjacentMines))
         }
     }
 
