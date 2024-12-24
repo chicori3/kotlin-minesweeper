@@ -2,8 +2,12 @@ package cell
 
 class Coordinates(
     private val values: List<Coordinate>,
+    private val mineGenerationStrategy: MineGenerationStrategy,
 ) {
-    fun randomMineCoordinates(mineCount: Count): Map<Coordinate, Cell> = values.shuffled().take(mineCount.value).let(::toCells)
+    fun generateMineCoordinates(mineCount: Count): Map<Coordinate, Cell> {
+        val mineCoordinates = mineGenerationStrategy.generateMineCoordinates(values, mineCount)
+        return toCells(mineCoordinates)
+    }
 
     private fun toCells(mineCoordinates: List<Coordinate>): Map<Coordinate, Cell> {
         val mineCells = mineCoordinates.map { it to MineCell }
@@ -43,8 +47,9 @@ class Coordinates(
         fun of(
             height: Length,
             width: Length,
+            mineGenerationStrategy: MineGenerationStrategy
         ): Coordinates {
-            return Coordinates(generateCoordinates(height, width))
+            return Coordinates(generateCoordinates(height, width), mineGenerationStrategy)
         }
 
         private fun generateCoordinates(
