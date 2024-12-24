@@ -29,14 +29,18 @@ class Coordinates(
         return values.filterNot(mineCoordinates::contains)
     }
 
-    private fun countAdjacentMines(mineCoordinates: List<Coordinate>, coordinate: Coordinate): Int {
+    private fun countAdjacentMines(
+        mineCoordinates: List<Coordinate>,
+        coordinate: Coordinate,
+    ): Int {
         val directions = CoordinateDirection.entries.toTypedArray()
 
         return directions.count { direction ->
-            val adjacentCoordinate = Coordinate(
-                coordinate.x + direction.x,
-                coordinate.y + direction.y,
-            )
+            val adjacentCoordinate =
+                Coordinate(
+                    coordinate.x + direction.x,
+                    coordinate.y + direction.y,
+                )
             adjacentCoordinate in mineCoordinates
         }
     }
@@ -47,7 +51,7 @@ class Coordinates(
         fun of(
             height: Length,
             width: Length,
-            mineGenerationStrategy: MineGenerationStrategy
+            mineGenerationStrategy: MineGenerationStrategy,
         ): Coordinates {
             return Coordinates(generateCoordinates(height, width), mineGenerationStrategy)
         }

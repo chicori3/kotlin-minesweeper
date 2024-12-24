@@ -42,17 +42,18 @@ private fun populateBoardArray(
     }
 }
 
-private fun formatBlankCell(cell: BlankCell): String = when (cell.adjacentMineCount) {
-    MineCount.ZERO -> "0️⃣"
-    MineCount.ONE -> "1️⃣"
-    MineCount.TWO -> "2️⃣"
-    MineCount.THREE -> "3️⃣"
-    MineCount.FOUR -> "4️⃣"
-    MineCount.FIVE -> "5️⃣"
-    MineCount.SIX -> "6️⃣"
-    MineCount.SEVEN -> "7️⃣"
-    MineCount.EIGHT -> "8️⃣"
-}
+private fun formatBlankCell(cell: BlankCell): String =
+    when (cell.adjacentMineCount) {
+        MineCount.ZERO -> "0️⃣"
+        MineCount.ONE -> "1️⃣"
+        MineCount.TWO -> "2️⃣"
+        MineCount.THREE -> "3️⃣"
+        MineCount.FOUR -> "4️⃣"
+        MineCount.FIVE -> "5️⃣"
+        MineCount.SIX -> "6️⃣"
+        MineCount.SEVEN -> "7️⃣"
+        MineCount.EIGHT -> "8️⃣"
+    }
 
 private fun boardArrayToString(boardArray: Array<MutableList<String>>): String {
     return boardArray.joinToString("\n") { it.joinToString("") }
