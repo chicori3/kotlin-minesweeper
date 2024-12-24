@@ -1,9 +1,11 @@
 package view
 
+import cell.BlankCell
 import cell.Cell
 import cell.CellBoard
 import cell.Coordinate
 import cell.MineCell
+import cell.MineCount
 
 fun format(board: CellBoard): String {
     val cells = board.cells
@@ -34,10 +36,22 @@ private fun populateBoardArray(
         val emoji =
             when (cell) {
                 is MineCell -> "💣"
-                else -> "🟫"
+                is BlankCell -> formatBlankCell(cell)
             }
         boardArray[y][x] = emoji
     }
+}
+
+private fun formatBlankCell(cell: BlankCell): String = when (cell.adjacentMineCount) {
+    MineCount.ZERO -> "0️⃣"
+    MineCount.ONE -> "1️⃣"
+    MineCount.TWO -> "2️⃣"
+    MineCount.THREE -> "3️⃣"
+    MineCount.FOUR -> "4️⃣"
+    MineCount.FIVE -> "5️⃣"
+    MineCount.SIX -> "6️⃣"
+    MineCount.SEVEN -> "7️⃣"
+    MineCount.EIGHT -> "8️⃣"
 }
 
 private fun boardArrayToString(boardArray: Array<MutableList<String>>): String {
