@@ -2,6 +2,6 @@ package cell
 
 sealed interface Cell
 
-data object BlankCell : Cell
+data class BlankCell(val adjacentMineCount: Int) : Cell
 
 data object MineCell : Cell
