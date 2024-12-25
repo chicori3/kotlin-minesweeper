@@ -17,9 +17,10 @@ class CellBoard(
             height: Length,
             width: Length,
             mineCount: Count,
+            mineGenerationStrategy: MineGenerationStrategy = RandomMineGenerationStrategy,
         ): CellBoard {
-            val coordinates = Coordinates.of(height, width)
-            val cellsWithMine = coordinates.randomMineCoordinates(mineCount)
+            val coordinates = Coordinates.of(height, width, mineGenerationStrategy)
+            val cellsWithMine = coordinates.generateMineCoordinates(mineCount)
 
             return CellBoard(cellsWithMine)
         }
