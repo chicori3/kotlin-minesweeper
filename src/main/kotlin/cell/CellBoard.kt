@@ -28,30 +28,24 @@ class CellBoard(
         startCoordinate: Coordinate,
         startCell: Cell,
     ): GameResult {
-        val revealed = mutableSetOf<Coordinate>()
-        floodFill(startCoordinate, startCell, revealed)
-        return GameResult.CONTINUE(revealed)
+        floodFill(startCoordinate, startCell)
+        return GameResult.CONTINUE
     }
 
     private fun floodFill(
         coordinate: Coordinate,
         cell: Cell,
-        revealed: MutableSet<Coordinate>,
     ) {
         if (cell is MineCell || cell.revealed) return
 
         _cells[coordinate] = cell.reveal()
-        revealed.add(coordinate)
 
         if (cell.shouldFloodFill()) {
-            floodFillAdjacentCells(coordinate, revealed)
+            floodFillAdjacentCells(coordinate)
         }
     }
 
-    private fun floodFillAdjacentCells(
-        coordinate: Coordinate,
-        revealed: MutableSet<Coordinate>,
-    ) {
+    private fun floodFillAdjacentCells(coordinate: Coordinate) {
         val directions = CoordinateDirection.entries.toTypedArray()
         directions.forEach { direction ->
             val adjacentCoordinate =
@@ -60,7 +54,7 @@ class CellBoard(
                     coordinate.y + direction.y,
                 )
             _cells[adjacentCoordinate]?.let { adjacentCell ->
-                floodFill(adjacentCoordinate, adjacentCell, revealed)
+                floodFill(adjacentCoordinate, adjacentCell)
             }
         }
     }
