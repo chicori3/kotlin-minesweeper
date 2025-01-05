@@ -48,13 +48,17 @@ class CellBoard(
         }
     }
 
-    private fun floodFillAdjacentCells(coordinate: Coordinate, revealed: MutableSet<Coordinate>) {
+    private fun floodFillAdjacentCells(
+        coordinate: Coordinate,
+        revealed: MutableSet<Coordinate>,
+    ) {
         val directions = CoordinateDirection.entries.toTypedArray()
         directions.forEach { direction ->
-            val adjacentCoordinate = Coordinate(
-                coordinate.x + direction.x,
-                coordinate.y + direction.y,
-            )
+            val adjacentCoordinate =
+                Coordinate(
+                    coordinate.x + direction.x,
+                    coordinate.y + direction.y,
+                )
             _cells[adjacentCoordinate]?.let { adjacentCell ->
                 floodFill(adjacentCoordinate, adjacentCell, revealed)
             }

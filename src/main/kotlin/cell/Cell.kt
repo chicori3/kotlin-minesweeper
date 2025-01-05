@@ -2,13 +2,15 @@ package cell
 
 sealed interface Cell {
     val revealed: Boolean
+
     fun reveal(): Cell
+
     fun shouldFloodFill(): Boolean
 }
 
 data class BlankCell(
     val adjacentMineCount: MineCount,
-    private var _revealed: Boolean = false
+    private var _revealed: Boolean = false,
 ) : Cell {
     override val revealed: Boolean
         get() = _revealed

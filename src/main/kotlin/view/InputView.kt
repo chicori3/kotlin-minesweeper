@@ -21,8 +21,9 @@ object InputView {
 
     fun inputCoordinate(): Coordinate {
         print("open: ")
-        val input = readlnOrNull()
-            ?: throw IllegalArgumentException("좌표를 입력해주세요.")
+        val input =
+            readlnOrNull()
+                ?: throw IllegalArgumentException("좌표를 입력해주세요.")
         val (x, y) = input.split(",")
 
         return Coordinate(
